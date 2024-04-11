@@ -7,7 +7,9 @@ import MobileMenu from "./MobileMenu";
 import profileimg from "../assets/images/default-blue.png"
 import AccountMenu from "./AccountMenu";
 
+
 const TOP_OFFSET = 60;
+
 
 const Navbar = () => {
   const NavItems = [
@@ -21,7 +23,7 @@ const Navbar = () => {
   const [showMobileMenu, setshowMobileMenu] = useState(false);
   const [showAccountMenu, setshowAccountMenu] = useState(false);
   const [showBackground , setshowBackground] = useState(false);
-
+  
   const toggleMobileMenu = useCallback(() => {
     setshowMobileMenu((current) => !current);
   }, []);
@@ -30,8 +32,8 @@ const Navbar = () => {
   }, []);
   
   useEffect(() => {
+    
     const handleScroll = () => {
-      console.log(window.scrollY)
       if (window.scrollY >= TOP_OFFSET) {
         setshowBackground(true)
       } else {
