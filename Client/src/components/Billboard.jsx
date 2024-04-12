@@ -6,8 +6,12 @@ const fetcher = (...args) => fetch(...args).then((response) => response.json());
 const Billboard = () => {
   const { data, error, isLoading } = useSWR(
     "http://localhost:5000/api/v1/randomMovies",
-    fetcher
+    fetcher,
+    {
+      revalidateOnFocus : false
+    }
   );
+  
   return (
     <div className="relative h-[56.25vw]">
       <video
