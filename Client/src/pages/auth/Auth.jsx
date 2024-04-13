@@ -57,7 +57,7 @@ const Auth = () => {
   return (
     <>
       <div
-        className="relative w-full h-full bg-no-repeat bg-center bg-cover bg-fixed"
+        className="relative w-full h-screen bg-no-repeat bg-center bg-cover bg-fixed"
         style={{ backgroundImage: `url(${heroImage})` }}
       >
         <div className="w-full h-full bg-black lg:bg-opacity-50">

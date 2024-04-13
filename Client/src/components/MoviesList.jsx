@@ -5,7 +5,13 @@ import MovieCard from "./MovieCard"
 const fetcher = (...args) => fetch(...args).then((response)=> response.json())
 
 const MoviesList = () => {
-  const {data} = useSWR("http://localhost:5000/api/v1/movies", fetcher);
+  const {data} = useSWR("http://localhost:5000/api/v1/movies", fetcher,{
+  
+      revalidateIfStale: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false
+
+  });
   console.log(data);
   if(isEmpty(data)){
     return null

@@ -1,5 +1,7 @@
 import useSWR from "swr";
 import { AiOutlineInfoCircle } from "react-icons/ai";
+import PlayButton from "./PlayButton";
+import { useNavigate } from 'react-router-dom';
 
 const fetcher = (...args) => fetch(...args).then((response) => response.json());
 
@@ -8,10 +10,12 @@ const Billboard = () => {
     "http://localhost:5000/api/v1/randomMovies",
     fetcher,
     {
-      revalidateOnFocus : false
+      revalidateIfStale: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false
     }
   );
-  
+  const navigate = useNavigate();
   return (
     <div className="relative h-[56.25vw]">
       <video
@@ -31,6 +35,7 @@ const Billboard = () => {
         </p>
 
         <div className="flex flex-row items-center mt-3 md:mt-4 gap-3">
+          <PlayButton movieId={data?._id}/>
           <button className="
              flex
              flex-row
