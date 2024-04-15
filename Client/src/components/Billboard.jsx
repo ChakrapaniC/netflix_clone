@@ -2,6 +2,8 @@ import useSWR from "swr";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import PlayButton from "./PlayButton";
 import { useNavigate } from 'react-router-dom';
+import { useCallback } from "react";
+import useInfoModel from "../hook/useInfoModel";
 
 const fetcher = (...args) => fetch(...args).then((response) => response.json());
 
@@ -15,7 +17,13 @@ const Billboard = () => {
       revalidateOnReconnect: false
     }
   );
+  const {openModel} = useInfoModel();
   const navigate = useNavigate();
+
+  const handleOpenModel = useCallback(()=>{
+     openModel(data?.id)
+  },[openModel , data?.id]);
+
   return (
     <div className="relative h-[56.25vw]">
       <video
@@ -36,7 +44,7 @@ const Billboard = () => {
 
         <div className="flex flex-row items-center mt-3 md:mt-4 gap-3">
           <PlayButton movieId={data?._id}/>
-          <button className="
+          <button onClick={handleOpenModel} className="
              flex
              flex-row
              items-center
