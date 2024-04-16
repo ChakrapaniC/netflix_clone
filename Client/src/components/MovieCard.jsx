@@ -1,5 +1,9 @@
 import { BsPlayFill } from "react-icons/bs";
+import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+import useInfoModel from "../hook/useInfoModel";
+
 const MovieCard = ({ data }) => {
+  const {openModel} = useInfoModel()
   return (
     <div className="group bg-zinc-900 col-span relative h-[12vw]">
       <img
@@ -51,6 +55,24 @@ const MovieCard = ({ data }) => {
               onClick={() => {}}
             >
               <BsPlayFill size={30} />
+            </div>
+            <div className="
+              cursor-pointer
+              ml-auto
+              flex
+              justify-center
+              items-center
+              w-6
+              h-6
+              lg:w-10 lg:h-10
+              rounded-full
+              group/item
+              hover:bg-neutral-600
+              transition
+              border-2
+              border-white
+            ">
+              <MdOutlineKeyboardArrowDown onClick={()=> openModel(data?._id)} size={25} className="text-white"/>
             </div>
           </div>
 

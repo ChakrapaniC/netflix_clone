@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useEffect,useCallback, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import PlayButton from "./PlayButton";
 import useSWR from "swr";
@@ -7,32 +7,45 @@ import useInfoModel from "../hook/useInfoModel";
 const fetcher = (...args) => fetch(...args).then((response) => response.json());
 
 const InfoModel = ({visible , onClose}) => {
-  const [isVisible, setisVisible] = useState(visible);
+  const [isVisible, setisVisible] = useState(!!visible);
   const {movieId} = useInfoModel();
-  const { data} = useSWR(`http://localhost:5000/api/v1/singleMovie/${movieId}`,fetcher);
-
+  console.log(visible);
+  console.log(movieId);
+  const { data = {}} = useSWR(`http://localhost:5000/api/v1/singleMovie/${movieId}`,fetcher,
+    {
+      revalidateIfStale: false,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false
+    }
+  );
+  
+  useEffect(() => {
+    setisVisible(!!visible)
+  }, [visible])
+  
   const handleClose = useCallback(()=> {
-    setisVisible(!!visible);
+    setisVisible(false);
     setTimeout(()=> {
         onClose();
     },300)
-  },[onClose , visible]);
+  },[onClose]);
 
   return (
-    <div className='
+    <div className={`
+      ${isVisible ? 'scale-100' : ' scale-0 duration-200'}
+      trasnform 
       flex
       justify-center
       items-center
       inset-0
       z-50
-      transition
-      duration-300
+      h-screen
       bg-black
       bg-opacity-0
       overflow-x-hidden
       overflow-y-auto
       fixed
-    '>
+    `}>
         <div className='
           relative
           w-auto
@@ -42,7 +55,7 @@ const InfoModel = ({visible , onClose}) => {
           rounded-md
         '>
             <div className={`
-              ${isVisible ? 'scale-100' : 'scale-0'}
+              
               relative
               flex-auto
               transform
@@ -52,7 +65,7 @@ const InfoModel = ({visible , onClose}) => {
             `}>
                 <div className='relative h-96'>
                     <video className='w-full h-full brghtness-[60%] object cover' autoPlay loop muted poster={data?.thumbnailUrl} src={data?.videoUrl}></video>
-                    <div className='
+                    <div  className='
                       cursor-pointer
                       w-10
                       h-10
@@ -66,9 +79,9 @@ const InfoModel = ({visible , onClose}) => {
                       top-3
                       right-3
                     '
-                    onClick={()=> {}}
+                    onClick={handleClose}
                     >
-                       <AiOutlineClose className="text-white" onClick={handleClose}/>
+                       <AiOutlineClose className="text-white cursor-pointer" />
                     </div>
                     <div className="
                       absolute
@@ -92,17 +105,18 @@ const InfoModel = ({visible , onClose}) => {
                           flex-row
                           items-center
                           gap-4
+                          mb-3
                         ">
                             <PlayButton/>
                         </div>
                     </div>
                 </div>
 
-                <div className="px-12 py-6">
-                    <p className="text-lg font-semibold text-green-400">New</p>
-                    <p className="text-lg text-white">{data?.duration}</p>
-                    <p className="text-lg text-white">{data?.description}</p>
-                    <p className="text-lg text-white">{data?.genre}</p>
+                <div className="px-12 py-8">
+                    <p className="text-lg font-semibold text-green-400 mb-2">New</p>
+                    <p className="text-lg text-white mb-1">{data?.duration}</p>
+                    <p className="text-lg text-white mb-1">{data?.description}</p>
+                    <p className="text-lg text-red-400">{data?.genre}</p>
                 </div>
             </div>
 

@@ -3,8 +3,8 @@ import { create } from 'zustand'
 const useInfoModel = create((set)=>({
     movieId: undefined,
     isOpen: false,
-    openModel: (movieId) => set({isOpen: true , movieId}),
-    closeModel: (movieId) => set({isOpen: false, movieId})
+    openModel: (Id) => set({isOpen: true , movieId: Id}),
+    closeModel: (Id) => set({isOpen: false, movieId: Id})
 
 }))
 
