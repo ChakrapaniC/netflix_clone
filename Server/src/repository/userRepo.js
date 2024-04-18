@@ -41,9 +41,8 @@ const loginUser = async (req, res) => {
         if (!token) {
             throw { status: 500, message: "Token generation failed" };
         }
-        res.status(200).send({message:"login successfully"})
-        return { token };
-       
+        res.status(200).send({message:"login successfully", token: token})
+
     } catch (error) {
         throw error;
     }
