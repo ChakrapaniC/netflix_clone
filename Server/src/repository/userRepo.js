@@ -1,6 +1,8 @@
 const userModel = require('../model/UserModel');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const {generateToken, verifyToken} = require('../auth/userAuth');
+const SECRET_KEY = process.env.JWT_SECRET_KEY
 
 const registerUser = async (req, res) => {
     console.log(req.body)
@@ -59,4 +61,18 @@ const verifyTokenMiddleware = (req, res, next) => {
         res.status(401).json({ status: 401, message: verificationResult.message });
     }
 }
-module.exports = { registerUser, loginUser,verifyTokenMiddleware };
+
+const getUser = async (req , res) =>{
+    try{
+        const token =  jwt.verify(req.headers.authorization , SECRET_KEY);
+        if(token){
+          let user =   await userModel.findById(token.user);
+          if(user){
+             res.status(200).send(user);
+          }
+        }
+    }catch (error){
+        throw error
+    }
+}
+module.exports = { registerUser, loginUser,verifyTokenMiddleware , getUser };
