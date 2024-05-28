@@ -3,6 +3,7 @@ import MoviesList from "../../components/MoviesList";
 import Navbar from "../../components/Navbar";
 import InfoModel from "../../components/InfoModel";
 import useInfoModel from "../../hook/useInfoModel";
+import Authorization from "../../HOC/Authorization";
 
 
 const HomePage = () => {
@@ -21,4 +22,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default Authorization(HomePage);

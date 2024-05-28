@@ -3,14 +3,19 @@ import axios from "axios";
 import heroImage from "../../assets/images/hero.jpg";
 import logo from "../../assets/images/logo.png";
 import Input from "../../components/Input";
+import { useNavigate } from "react-router";
 
 
 const Auth = () => {
   const [Email, setEmail] = useState("");
   const [Username, setUsername] = useState("");
   const [Password, setPassword] = useState("");
+  const [errors, setErrors] = useState({});
+
 
   const [Variant, setVariant] = useState("login");
+ 
+  const navigate = useNavigate()
 
   const toggleVariant = () => {
     setVariant((currentVariant) =>
@@ -40,16 +45,27 @@ const Auth = () => {
   };
 
   const login = async (email , password) =>{
-    alert('login')
     const dataToSend = {
       email: email,
       password: password
     };
     try{
-      const response = await axios.post("http://localhost:5000/api/v1/login", dataToSend);
-      if(response){
-        alert('login succesfully')
+      let validationErrors = {};
+      if (!email) {
+        validationErrors.email = 'Email is required';
       }
+      if (!password) {
+        validationErrors.password = 'Password is required';
+      }
+      setErrors(validationErrors);
+      if (Object.keys(validationErrors).length === 0) {
+        const response = await axios.post("http://localhost:5000/api/v1/login", dataToSend);
+        if(response){
+          localStorage.setItem('jwtToken', response.data.token);
+          navigate('/profile');
+        }
+      }
+      
     }catch(err)  {
       console.log(err)
     }
@@ -76,6 +92,7 @@ const Auth = () => {
                     onChange={(e) => setUsername(e.target.value)}
                     label="usename"
                     value={Username}
+                   
                   />
                 )}
                 <Input
@@ -83,13 +100,18 @@ const Auth = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   label="email"
                   value={Email}
+                  error={errors.email}
+                  
                 />
+                  {errors.email && <p className="text-red-600 mt-1">{errors.email}</p>}
                 <Input
                   id="password"
                   onChange={(e) => setPassword(e.target.value)}
                   label="password"
                   value={Password}
+                  error={errors.password}
                 />
+                 {errors.password && <p className="text-red-600 mt-1">{errors.password}</p>}
               </div>
               <button className="bg-red-600 py-3 hover:bg-red-700 w-full mt-10 rounded-md transition" onClick={Variant === "register" ? ()=> register(Username,Email,Password) : ()=> login(Email,Password)}>
                 {Variant === 'login' ? 'Login' : 'Register'}
