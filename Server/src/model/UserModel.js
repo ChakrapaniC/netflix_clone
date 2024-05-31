@@ -12,6 +12,10 @@ const UserSchema = mongoose.Schema({
     password:{
         type: String,
         required: true 
+    },
+    favoriteIds:{
+        type:  [String],
+        required: false
     }
 },{timestamps: true});
 
