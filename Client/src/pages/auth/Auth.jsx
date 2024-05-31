@@ -4,18 +4,18 @@ import heroImage from "../../assets/images/hero.jpg";
 import logo from "../../assets/images/logo.png";
 import Input from "../../components/Input";
 import { useNavigate } from "react-router";
-
+import { ClipLoader } from "react-spinners";
 
 const Auth = () => {
   const [Email, setEmail] = useState("");
   const [Username, setUsername] = useState("");
   const [Password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
-
+  const [loading, setLoading] = useState(false);
 
   const [Variant, setVariant] = useState("login");
- 
-  const navigate = useNavigate()
+
+  const navigate = useNavigate();
 
   const toggleVariant = () => {
     setVariant((currentVariant) =>
@@ -28,48 +28,55 @@ const Auth = () => {
       username: username,
       email: email,
       password: password,
-     
     };
     try {
       const response = await axios.post(
         "http://localhost:5000/api/v1/register",
         dataToSend
       );
-      if(response){
+      if (response) {
         console.log(response.data);
-        setVariant("login")
+        setVariant("login");
       }
     } catch (err) {
       console.log(err);
     }
   };
 
-  const login = async (email , password) =>{
+  const login = async (email, password) => {
     const dataToSend = {
       email: email,
-      password: password
+      password: password,
     };
-    try{
+
+    setLoading(true);
+    try {
       let validationErrors = {};
       if (!email) {
-        validationErrors.email = 'Email is required';
+        validationErrors.email = "Please enter a valid email address.";
       }
       if (!password) {
-        validationErrors.password = 'Password is required';
+        validationErrors.password =
+          "Your password must contain between 4 and 60 characters.";
       }
+
       setErrors(validationErrors);
       if (Object.keys(validationErrors).length === 0) {
-        const response = await axios.post("http://localhost:5000/api/v1/login", dataToSend);
-        if(response){
-          localStorage.setItem('jwtToken', response.data.token);
-          navigate('/profile');
+        const response = await axios.post(
+          "http://localhost:5000/api/v1/login",
+          dataToSend
+        );
+        if (response) {
+          localStorage.setItem("jwtToken", response.data.token);
+          navigate("/profile");
         }
       }
-      
-    }catch(err)  {
-      console.log(err)
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setLoading(false);
     }
-  }
+  };
   return (
     <>
       <div
@@ -92,30 +99,46 @@ const Auth = () => {
                     onChange={(e) => setUsername(e.target.value)}
                     label="usename"
                     value={Username}
-                   
                   />
+                )}
+                {errors.username && (
+                  <p className="text-red-600 ">{errors.email}</p>
                 )}
                 <Input
                   id="email"
                   onChange={(e) => setEmail(e.target.value)}
                   label="email"
                   value={Email}
-                  error={errors.email}
-                  
                 />
-                  {errors.email && <p className="text-red-600 mt-1">{errors.email}</p>}
+                {errors.email && (
+                  <p className="text-red-600 ">{errors.email}</p>
+                )}
                 <Input
                   id="password"
                   onChange={(e) => setPassword(e.target.value)}
                   label="password"
                   value={Password}
-                  error={errors.password}
                 />
-                 {errors.password && <p className="text-red-600 mt-1">{errors.password}</p>}
+                {errors.password && (
+                  <p className="text-red-600 ">{errors.password}</p>
+                )}
               </div>
-              <button className="bg-red-600 py-3 hover:bg-red-700 w-full mt-10 rounded-md transition" onClick={Variant === "register" ? ()=> register(Username,Email,Password) : ()=> login(Email,Password)}>
-                {Variant === 'login' ? 'Login' : 'Register'}
-              </button>
+              {loading ? (
+                <button className="bg-red-600 py-3 hover:bg-red-700 w-full mt-10 rounded-md transition">
+                  <ClipLoader color="white" />
+                </button>
+              ) : (
+                <button
+                  className="bg-red-600 py-3 hover:bg-red-700 w-full mt-10 rounded-md transition"
+                  onClick={
+                    Variant === "register"
+                      ? () => register(Username, Email, Password)
+                      : () => login(Email, Password)
+                  }
+                >
+                  {Variant === "login" ? "Login" : "Register"}
+                </button>
+              )}
               <p className="text-neutral-500 mt-12 text-center">
                 {Variant === "login"
                   ? "New to Netflix ?"

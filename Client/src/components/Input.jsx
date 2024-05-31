@@ -1,6 +1,8 @@
-import React from "react";
 
-const Input = ({ id, onChange, label, value,error }) => {
+import React, { useEffect, useRef } from 'react';
+
+const Input = ({ id, onChange, label, value }) => {
+  
   return (
     <>
       <div className="relative">
@@ -8,7 +10,6 @@ const Input = ({ id, onChange, label, value,error }) => {
           id={id}
           onChange={onChange}
           value={value}
-          autoFocus
           className="
           block
           rounded-md

@@ -24,9 +24,9 @@ const Billboard = () => {
   }, [openModel, data?._id]);
 
   return (
-    <div className="relative h-[56.25vw] lg:h-[35.25vw]">
+    <div className="relative h-[56.25vw] lg:h-[50.25vw]">
       <video
-        className="w-full h-[56.25vw] lg:h-[40.25vw] object-cover brightness-[60%]"
+        className="w-full h-[56.25vw] lg:h-[50.25vw] object-cover brightness-[60%]"
         autoPlay
         muted
         loop
@@ -34,7 +34,7 @@ const Billboard = () => {
         src={data?.videoUrl}
       ></video>
 
-      <div className="absolute top-[30%] md:top-[40%] ml-4 md:ml-16">
+      <div className="absolute top-[30%] md:top-[35%] ml-4 md:ml-16">
         <p className="text-white text-1xl md:text-5xl lg:text-6xl h-full w-[50%] font-bold drop-shadow-xl">
           {data?.title}
         </p>

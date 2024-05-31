@@ -1,6 +1,7 @@
 import { BsPlayFill } from "react-icons/bs";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import useInfoModel from "../hook/useInfoModel";
+import FavoriteButton from "./FavoriteButton";
 
 const MovieCard = ({ data }) => {
   const {openModel} = useInfoModel()
@@ -56,6 +57,7 @@ const MovieCard = ({ data }) => {
             >
               <BsPlayFill size={30} />
             </div>
+            <FavoriteButton movieId={data?._id}/>
             <div className="
               cursor-pointer
               ml-auto
