@@ -9,7 +9,8 @@ const session = require('express-session');
 const cors = require('cors');
 const routes = require('./src/router/userRouter');
 const MongoDBStore = require('connect-mongodb-session')(session);
-const { passportAuth } = require('./src/auth/userAuth')
+const { passportAuth } = require('./src/auth/userAuth');
+const googleAuth = require('./src/auth/googleAuth');
 const DB_URI = process.env.DB_URI;
 const SECRET_KEY = process.env.SECRET_KEY;
 
@@ -51,6 +52,7 @@ passport.deserializeUser( async (_id , done)=> {
         done(null ,user)
     } 
 })
+
 
 passport.use(passportAuth());
 app.use('/api/v1', routes)

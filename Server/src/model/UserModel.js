@@ -1,22 +1,28 @@
 const mongoose = require('mongoose');
 
-const UserSchema = mongoose.Schema({
-    username:{
+const UserSchema = new mongoose.Schema({
+    username: {
         type: String,
         required: false
     },
-    email:{
+    email: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
-    password:{
+    password: {
         type: String,
-        required: true 
+        required: false // Make password optional for OAuth users
     },
-    favoriteIds:{
-        type:  [String],
+    googleId: {
+        type: String,
+        required: false, // This field is for storing Google ID
+        unique: true
+    },
+    favoriteIds: {
+        type: [String],
         required: false
     }
-},{timestamps: true});
+}, { timestamps: true });
 
-module.exports = mongoose.model('UserModel', UserSchema, 'User')
+module.exports = mongoose.model('UserModel', UserSchema, 'User');
