@@ -11,12 +11,14 @@ const routes = require('./src/router/userRouter');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const { passportAuth } = require('./src/auth/userAuth');
 const googleAuth = require('./src/auth/googleAuth');
+const githubAuth = require('./src/auth/githubAuth')
 const DB_URI = process.env.DB_URI;
 const SECRET_KEY = process.env.SECRET_KEY;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
+app.use(express.json()); 
 const store = new MongoDBStore({
     uri: DB_URI,
     collection: 'app_session'
@@ -34,6 +36,13 @@ app.use(session({
 mongoose.connect(DB_URI);
 mongoose.connection.once('open', () => {
     console.log('connected to db');
+    userModel.collection.dropIndex('githubId_1', (err, result) => {
+        if (err) {
+            console.error('Error dropping index:', err);
+        } else {
+            console.log('Index dropped:', result);
+        }
+    });
 }).on('error', () => {
     console.log('error');
 });
@@ -58,6 +67,7 @@ passport.use(passportAuth());
 app.use('/api/v1', routes)
 
 let port = process.env.PORT || 8000
+
 
 app.listen(port, () => {
     console.log(port)

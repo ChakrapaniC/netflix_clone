@@ -5,7 +5,7 @@ const {generateToken, verifyToken} = require('../auth/userAuth');
 const SECRET_KEY = process.env.JWT_SECRET_KEY
 
 const registerUser = async (req, res) => {
-    console.log(req.body)
+    // console.log(req.body)
     try {
         const existingUser = await userModel.findOne({ email: req.body.email });
         if (existingUser) {
@@ -28,6 +28,7 @@ const registerUser = async (req, res) => {
 }
 
 const loginUser = async (req, res) => {
+    // console.log(req.session.passport);
     try {
         if (!req.session.passport) {
             throw { status: 401, message: "Unauthorized" };
@@ -51,7 +52,8 @@ const loginUser = async (req, res) => {
 }
 
 const verifyTokenMiddleware = (req, res, next) => {
-    const token = req.headers.authorization;
+    console.log("verifytoken is" ,req.headers)
+    const token = req?.headers?.authorization;
     const verificationResult = verifyToken(token);
 
     if (verificationResult.success) {
@@ -63,14 +65,14 @@ const verifyTokenMiddleware = (req, res, next) => {
 }
 
 const getUser = async (req , res) =>{
-    console.log("url hit")
+    // console.log("url hit")
     try{
         const token =  jwt.verify(req.headers.authorization , SECRET_KEY);
-        console.log(req.headers.authorization);
-        if(token){
-          let user =   await userModel.findById(token.user);
+      
+        const userId = token.userId || token.user;
+        if(userId){
+          let user =   await userModel.findById(userId);
           if(user){
-             console.log(user);
              res.status(200).send(user);
           }
         }
@@ -87,7 +89,7 @@ const toggleFavorite = async (req, res) => {
         const userId = token.user;
     
         let user = await userModel.findById(userId);
-        console.log(user);
+        // console.log(user);
         if (!user) {
             return res.status(404).json({ message: "User not found" });
         }

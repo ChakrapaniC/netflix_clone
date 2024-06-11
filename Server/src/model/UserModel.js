@@ -7,22 +7,23 @@ const UserSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: true,
-        unique: true
+        required: false,
+        unique: false
     },
     password: {
         type: String,
         required: false // Make password optional for OAuth users
     },
-    googleId: {
+    accountId: {
         type: String,
-        required: false, // This field is for storing Google ID
-        unique: true
     },
     favoriteIds: {
         type: [String],
         required: false
     }
 }, { timestamps: true });
+
+// UserSchema.index({ googleId: 1 }, { unique: true, sparse: true });
+// UserSchema.index({ email: 1 }, { unique: true, sparse: true });
 
 module.exports = mongoose.model('UserModel', UserSchema, 'User');

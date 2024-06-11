@@ -16,8 +16,20 @@ router.delete('/favoriteMovies/:_id', toggleFavorite);
 
 // Google OAuth routes
 router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
-router.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/' }), (req, res) => {
-    res.redirect('http://127.0.0.1:5173/profile'); // Redirect to your frontend route on successful login
+router.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: 'http://127.0.0.1:5173' }), (req, res) => {
+    const  token  = req.user.token; 
+    res.redirect(`http://127.0.0.1:5173?token=${token}`)
+
+  
+});
+
+// Github OAuth routes
+router.get('/auth/github', passport.authenticate('github', { scope: ['user:email'] }));
+router.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: 'http://127.0.0.1:5173/' }), (req, res) => {
+    const  token  = req.user.token; 
+    res.redirect(`http://127.0.0.1:5173?token=${token}`)
+
+  
 });
 
 module.exports = router;
