@@ -1,7 +1,7 @@
 
-import React, { useEffect, useRef } from 'react';
+// import React, { useEffect, useRef } from 'react';
 
-const Input = ({ id, onChange, label, value }) => {
+const Input = ({ id, onChange, label, value , type }) => {
   
   return (
     <>
@@ -10,6 +10,7 @@ const Input = ({ id, onChange, label, value }) => {
           id={id}
           onChange={onChange}
           value={value}
+          type={type}
           className="
           block
           rounded-md

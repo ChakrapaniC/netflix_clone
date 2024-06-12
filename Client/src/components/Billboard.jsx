@@ -7,8 +7,9 @@ import useInfoModel from "../hook/useInfoModel";
 const fetcher = (...args) => fetch(...args).then((response) => response.json());
 
 const Billboard = () => {
+  const apiUrl = process.env.REACT_APP_API_URL;
   const { data } = useSWR(
-    "http://localhost:5000/api/v1/randomMovies",
+    `${apiUrl}/randomMovies`,
     fetcher,
     {
       revalidateIfStale: false,

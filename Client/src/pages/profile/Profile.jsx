@@ -1,10 +1,11 @@
 import Authorization from '../../HOC/Authorization';
 import profileImg from '../../assets/images/default-blue.png'
-import { useNavigate } from 'react-router';
+import { useNavigate  } from 'react-router';
+
 
 const Profile = ({user}) => {
   const navigate = useNavigate();
-  console.log(user)
+
   const loginProfile = () => {
     let token = localStorage.getItem('jwtToken');
     if(token){

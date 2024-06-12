@@ -4,10 +4,31 @@ import Navbar from "../../components/Navbar";
 import InfoModel from "../../components/InfoModel";
 import useInfoModel from "../../hook/useInfoModel";
 import Authorization from "../../HOC/Authorization";
+import useSWR from "swr";
+import {  useMemo } from "react";
+import useUserInfo from "../../hook/useUserInfo";
 
 
+const fetcher = (...args) => fetch(...args).then((response)=> response.json())
 const HomePage = () => {
   const { isOpen, closeModel } = useInfoModel();
+  const apiUrl = process.env.REACT_APP_API_URL;
+  const {user} = useUserInfo();
+  const {data} = useSWR(`${apiUrl}/movies`, fetcher,{
+  
+  revalidateIfStale: false,
+  revalidateOnFocus: false,
+  revalidateOnReconnect: false
+
+});
+
+const favId = user?.favoriteIds;
+const favoriteMovies = useMemo(() => {
+  if (!data) return [];
+  return data.filter(movie => favId?.includes(movie._id));
+}, [data, favId]);
+console.log(favoriteMovies);
+
   return (
     <>
      <div className="w-full ">
@@ -15,7 +36,8 @@ const HomePage = () => {
       <Navbar />
       <Billboard />
       <div className="pb-40">
-        <MoviesList />
+        <MoviesList title={"Trendind Now"} movies={data}/>
+        <MoviesList title={"My List"} movies={favoriteMovies}/> 
       </div>
       </div>
     </>

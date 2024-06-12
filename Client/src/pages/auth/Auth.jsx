@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useState , useEffect } from "react";
 import axios from "axios";
 import heroImage from "../../assets/images/hero.jpg";
 import logo from "../../assets/images/logo.png";
 import Input from "../../components/Input";
 import { useNavigate } from "react-router";
 import { ClipLoader } from "react-spinners";
+import { FcGoogle } from "react-icons/fc";
+import { FaGithub } from "react-icons/fa";
 
 const Auth = () => {
   const [Email, setEmail] = useState("");
@@ -14,35 +16,67 @@ const Auth = () => {
   const [loading, setLoading] = useState(false);
 
   const [Variant, setVariant] = useState("login");
+  const apiUrl = process.env.REACT_APP_API_URL;
 
   const navigate = useNavigate();
+
+  
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    console.log(params)
+    const token = params.get('token');
+
+    if (token) {
+      console.log(token);
+      localStorage.setItem('jwtToken', token);
+      navigate('/profile');
+    }
+  },[ navigate]);
 
   const toggleVariant = () => {
     setVariant((currentVariant) =>
       currentVariant === "login" ? "register" : "login"
     );
   };
-
+  
   const register = async (username, email, password) => {
     const dataToSend = {
       username: username,
       email: email,
       password: password,
     };
+  
+    setLoading(true);
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/v1/register",
-        dataToSend
-      );
-      if (response) {
-        console.log(response.data);
-        setVariant("login");
+      let validationErrors = {};
+      
+      if (!username) {
+        validationErrors.username = "Please enter a username.";
+      }
+      if(username.length < 3){
+        validationErrors.username = "username must contain more than 2 character"
+      }
+      if (!email) {
+        validationErrors.email = "Please enter a valid email address.";
+      }
+      if (!password) {
+        validationErrors.password = "Your password must contain between 4 and 60 characters.";
+      }
+  
+      setErrors(validationErrors);
+      if (Object.keys(validationErrors).length === 0) {
+        const response = await axios.post(`${apiUrl}/register`, dataToSend);
+        if (response) {
+          console.log(response.data);
+          setVariant("login");
+        }
       }
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
-
   const login = async (email, password) => {
     const dataToSend = {
       email: email,
@@ -63,7 +97,7 @@ const Auth = () => {
       setErrors(validationErrors);
       if (Object.keys(validationErrors).length === 0) {
         const response = await axios.post(
-          "http://localhost:5000/api/v1/login",
+        `${apiUrl}/login`,
           dataToSend
         );
         if (response) {
@@ -98,17 +132,22 @@ const Auth = () => {
                     id="username"
                     onChange={(e) => setUsername(e.target.value)}
                     label="usename"
+                    type="text"
                     value={Username}
+                    required
                   />
+                  
                 )}
                 {errors.username && (
-                  <p className="text-red-600 ">{errors.email}</p>
+                  <p className="text-red-600 ">{errors.username}</p>
                 )}
                 <Input
                   id="email"
                   onChange={(e) => setEmail(e.target.value)}
                   label="email"
+                  type="email"
                   value={Email}
+                  required
                 />
                 {errors.email && (
                   <p className="text-red-600 ">{errors.email}</p>
@@ -117,7 +156,9 @@ const Auth = () => {
                   id="password"
                   onChange={(e) => setPassword(e.target.value)}
                   label="password"
+                  type="password"
                   value={Password}
+                  required
                 />
                 {errors.password && (
                   <p className="text-red-600 ">{errors.password}</p>
@@ -139,6 +180,15 @@ const Auth = () => {
                   {Variant === "login" ? "Login" : "Register"}
                 </button>
               )}
+
+              <div className="flex flex-row gap-4 mt-8 items-center justify-center">
+                <div onClick={()=> {window.location.href = "http://localhost:5000/api/v1/auth/google"}} className="w-10 h-10 bg-white rounded-full hover:opacity-80 transition cursor-pointer flex items-center justify-center">
+                  <FcGoogle size={30}/>
+                </div>
+                <div onClick={()=> {window.location.href = "http://localhost:5000/api/v1/auth/github"}} className="w-10 h-10 bg-white rounded-full hover:opacity-80 transition cursor-pointer flex items-center justify-center">
+                  <FaGithub size={30}/>
+                </div>
+              </div>
               <p className="text-neutral-500 mt-12 text-center">
                 {Variant === "login"
                   ? "New to Netflix ?"

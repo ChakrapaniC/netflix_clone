@@ -6,9 +6,10 @@ import { useNavigate } from 'react-router-dom';
 const fetcher = (...args) => fetch(...args).then((response) => response.json());
 
 const WatchMovie = () => {
+  const apiUrl = process.env.REACT_APP_API_URL;
   const { id } = useParams();
   const {data} = useSWR(
-    `http://localhost:5000/api/v1/singleMovie/${id}`,
+    `${apiUrl}/singleMovie/${id}`,
     fetcher,
     {
       revalidateIfStale: false,

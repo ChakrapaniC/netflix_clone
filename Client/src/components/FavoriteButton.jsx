@@ -1,21 +1,63 @@
-import React from 'react'
-import { AiOutlinePlus } from 'react-icons/ai'
-import useSWR from 'swr';
+
+import { AiOutlinePlus, AiOutlineCheck } from 'react-icons/ai'
+
+import { useCallback , useMemo } from 'react';
+import useUserInfo from '../hook/useUserInfo';
+
+
+
+const FavoriteButton = ({movieId}) => {
+
+const {user , mutate} =  useUserInfo();
 
 const token = localStorage.getItem("jwtToken");
-const fetcher = (...args) => fetch(...args , {
-    method: 'GET',
-    headers: {
-      Authorization: token
+ 
+  const addFavorite = useCallback(async () => {
+   
+    if (!movieId) return;
+    try {
+      const newFavoriteIds = [...user.favoriteIds, movieId];
+      await mutate({ ...user, favoriteIds: newFavoriteIds }, false); //it updates the cache without immediately revalidating it (hence the false argument).
+      await fetch(`${apiUrl}/favoriteMovies/${movieId}`, {
+        method: 'POST',
+        headers: {
+          Authorization: token,
+          'Content-Type': 'application/json'
+        }
+      });
+      await mutate(); // Revalidate the cache
+    } catch (err) {
+      console.error("Error adding favorite:", err);
+      mutate(); // Revert optimistic update
     }
-}).then(res => res.json());
-const FavoriteButton = ({movieId}) => {
- const {data} = useSWR('http://localhost:5000/api/v1/userProfile',fetcher);
- if(data){
-    console.log(data.favoriteIds)
- }
+  }, [movieId, user, mutate, token]);
+
+  const removeFavorite = useCallback(async () => {
+    const apiUrl = process.env.REACT_APP_API_URL;
+    if (!movieId) return;
+    try {
+      const newFavoriteIds = user.favoriteIds.filter(id => id !== movieId);
+      await mutate({ ...user, favoriteIds: newFavoriteIds }, false);
+      await fetch(`${apiUrl}/favoriteMovies/${movieId}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: token,
+          'Content-Type': 'application/json'
+        }
+      });
+      await mutate(); // Revalidate the cache
+    } catch (err) {
+      console.error("Error removing favorite:", err);
+      mutate(); // Revert optimistic update
+    }
+  }, [movieId, user, mutate, token]);
+
+
+  const isFavorite = useMemo(() => user?.favoriteIds?.includes(movieId), [user, movieId]);
+  const Icon = isFavorite ? AiOutlineCheck : AiOutlinePlus;
+
   return (
-    <div className='
+    <div onClick={isFavorite ? removeFavorite : addFavorite} className='
       cursor-pointer
       w-6
       h-6
@@ -31,7 +73,7 @@ const FavoriteButton = ({movieId}) => {
       transition
       hover:border-neutral-300
     '>
-       <AiOutlinePlus className='text-white' size={25}/> 
+       <Icon className='text-white' size={25}/> 
     </div>
   )
 }

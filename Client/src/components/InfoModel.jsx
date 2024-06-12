@@ -7,11 +7,14 @@ import useInfoModel from "../hook/useInfoModel";
 const fetcher = (...args) => fetch(...args).then((response) => response.json());
 
 const InfoModel = ({visible , onClose}) => {
+  const apiUrl = process.env.REACT_APP_API_URL;
   const [isVisible, setisVisible] = useState(!!visible);
   const {movieId} = useInfoModel();
   console.log(visible);
   console.log(movieId);
-  const { data = {}} = useSWR(`http://localhost:5000/api/v1/singleMovie/${movieId}`,fetcher,
+  const { data = {} } = useSWR(
+    movieId ? `${apiUrl}/singleMovie/${movieId}` : null,
+    fetcher,
     {
       revalidateIfStale: false,
       revalidateOnFocus: false,
