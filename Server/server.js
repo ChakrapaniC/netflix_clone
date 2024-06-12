@@ -36,13 +36,13 @@ app.use(session({
 mongoose.connect(DB_URI);
 mongoose.connection.once('open', () => {
     console.log('connected to db');
-    userModel.collection.dropIndex('githubId_1', (err, result) => {
-        if (err) {
-            console.error('Error dropping index:', err);
-        } else {
-            console.log('Index dropped:', result);
-        }
-    });
+    // userModel.collection.dropIndex('githubId_1', (err, result) => {
+    //     if (err) {
+    //         console.error('Error dropping index:', err);
+    //     } else {
+    //         console.log('Index dropped:', result);
+    //     }
+    // });
 }).on('error', () => {
     console.log('error');
 });
@@ -64,7 +64,11 @@ passport.deserializeUser( async (_id , done)=> {
 
 
 passport.use(passportAuth());
-app.use('/api/v1', routes)
+app.get('/',(req , res)=> {
+    res.send("server running");
+    res.end();
+})
+app.use('/api/v1', routes);
 
 let port = process.env.PORT || 8000
 
