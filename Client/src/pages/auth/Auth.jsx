@@ -182,10 +182,10 @@ const Auth = () => {
               )}
 
               <div className="flex flex-row gap-4 mt-8 items-center justify-center">
-                <div onClick={()=> {window.location.href = "http://localhost:5000/api/v1/auth/google"}} className="w-10 h-10 bg-white rounded-full hover:opacity-80 transition cursor-pointer flex items-center justify-center">
+                <div onClick={()=> {window.location.href = `${apiUrl}/auth/google`}} className="w-10 h-10 bg-white rounded-full hover:opacity-80 transition cursor-pointer flex items-center justify-center">
                   <FcGoogle size={30}/>
                 </div>
-                <div onClick={()=> {window.location.href = "http://localhost:5000/api/v1/auth/github"}} className="w-10 h-10 bg-white rounded-full hover:opacity-80 transition cursor-pointer flex items-center justify-center">
+                <div onClick={()=> {window.location.href = `${apiUrl}/auth/github`}} className="w-10 h-10 bg-white rounded-full hover:opacity-80 transition cursor-pointer flex items-center justify-center">
                   <FaGithub size={30}/>
                 </div>
               </div>
