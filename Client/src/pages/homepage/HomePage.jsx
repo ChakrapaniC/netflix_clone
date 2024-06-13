@@ -12,9 +12,8 @@ import useUserInfo from "../../hook/useUserInfo";
 const fetcher = (...args) => fetch(...args).then((response)=> response.json())
 const HomePage = () => {
   const { isOpen, closeModel } = useInfoModel();
-  const apiUrl = process.env.REACT_APP_API_URL;
   const {user} = useUserInfo();
-  const {data} = useSWR(`${apiUrl}/movies`, fetcher,{
+  const {data} = useSWR(`https://netflix-clone-j8ji.vercel.app/api/v1/movies`, fetcher,{
   
   revalidateIfStale: false,
   revalidateOnFocus: false,

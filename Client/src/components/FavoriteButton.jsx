@@ -18,7 +18,7 @@ const token = localStorage.getItem("jwtToken");
     try {
       const newFavoriteIds = [...user.favoriteIds, movieId];
       await mutate({ ...user, favoriteIds: newFavoriteIds }, false); //it updates the cache without immediately revalidating it (hence the false argument).
-      await fetch(`${apiUrl}/favoriteMovies/${movieId}`, {
+      await fetch(`https://netflix-clone-j8ji.vercel.app/api/v1/favoriteMovies/${movieId}`, {
         method: 'POST',
         headers: {
           Authorization: token,
@@ -33,12 +33,12 @@ const token = localStorage.getItem("jwtToken");
   }, [movieId, user, mutate, token]);
 
   const removeFavorite = useCallback(async () => {
-    const apiUrl = process.env.REACT_APP_API_URL;
+
     if (!movieId) return;
     try {
       const newFavoriteIds = user.favoriteIds.filter(id => id !== movieId);
       await mutate({ ...user, favoriteIds: newFavoriteIds }, false);
-      await fetch(`${apiUrl}/favoriteMovies/${movieId}`, {
+      await fetch(`https://netflix-clone-j8ji.vercel.app/api/v1/favoriteMovies/${movieId}`, {
         method: 'DELETE',
         headers: {
           Authorization: token,

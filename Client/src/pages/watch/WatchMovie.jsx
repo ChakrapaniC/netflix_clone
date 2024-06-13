@@ -6,10 +6,9 @@ import { useNavigate } from 'react-router-dom';
 const fetcher = (...args) => fetch(...args).then((response) => response.json());
 
 const WatchMovie = () => {
-  const apiUrl = process.env.REACT_APP_API_URL;
   const { id } = useParams();
   const {data} = useSWR(
-    `${apiUrl}/singleMovie/${id}`,
+    `https://netflix-clone-j8ji.vercel.app/api/v1/singleMovie/${id}`,
     fetcher,
     {
       revalidateIfStale: false,

@@ -13,7 +13,6 @@ const fetcher = async (url) => {
 
 const useUserInfo = () => {
   const [token, setToken] = useState(null);
-  const apiUrl = process.env.REACT_APP_API_URL;
 
   useEffect(() => {
     const jwtToken = localStorage.getItem("jwtToken");
@@ -23,7 +22,7 @@ const useUserInfo = () => {
   }, []);
 
   const { data, mutate, error } = useSWR(
-    token ? `${apiUrl}/userProfile` : null,
+    token ? `https://netflix-clone-j8ji.vercel.app/api/v1/userProfile` : null,
     fetcher,
     {
       revalidateIfStale: false,

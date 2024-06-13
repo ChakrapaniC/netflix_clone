@@ -7,9 +7,9 @@ import useInfoModel from "../hook/useInfoModel";
 const fetcher = (...args) => fetch(...args).then((response) => response.json());
 
 const Billboard = () => {
-  const apiUrl = process.env.REACT_APP_API_URL;
+  
   const { data } = useSWR(
-    `${apiUrl}/randomMovies`,
+    `https://netflix-clone-j8ji.vercel.app/api/v1/randomMovies`,
     fetcher,
     {
       revalidateIfStale: false,
@@ -17,7 +17,7 @@ const Billboard = () => {
       revalidateOnReconnect: false,
     }
   );
-  const { openModel, isOpen } = useInfoModel();
+  const { openModel } = useInfoModel();
   console.log(openModel);
 
   const handleOpenModel = useCallback(() => {

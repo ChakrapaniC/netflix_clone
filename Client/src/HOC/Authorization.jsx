@@ -14,9 +14,9 @@ const Authorization = (Component) => {
 
   
     const fetchData = useCallback(async () => {
-      const apiUrl = process.env.REACT_APP_API_URL;
+
       try {
-        const response = await fetch(`${apiUrl}/login`, {
+        const response = await fetch(`https://netflix-clone-j8ji.vercel.app/api/v1/login`, {
           method: 'GET',
           headers: {
             Authorization: token, // Use the token directly as per your backend's expectation

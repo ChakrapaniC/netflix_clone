@@ -7,13 +7,12 @@ import useInfoModel from "../hook/useInfoModel";
 const fetcher = (...args) => fetch(...args).then((response) => response.json());
 
 const InfoModel = ({visible , onClose}) => {
-  const apiUrl = process.env.REACT_APP_API_URL;
   const [isVisible, setisVisible] = useState(!!visible);
   const {movieId} = useInfoModel();
   console.log(visible);
   console.log(movieId);
   const { data = {} } = useSWR(
-    movieId ? `${apiUrl}/singleMovie/${movieId}` : null,
+    movieId ? `https://netflix-clone-j8ji.vercel.app/api/v1/singleMovie/${movieId}` : null,
     fetcher,
     {
       revalidateIfStale: false,
