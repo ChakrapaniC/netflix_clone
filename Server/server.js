@@ -64,12 +64,11 @@ passport.deserializeUser( async (_id , done)=> {
 
 
 passport.use(passportAuth());
-app.get('/',(req , res)=> {
-    res.send("server running");
-    res.end();
-})
-app.use('/api/v1', routes);
 
+app.use('/api/v1', routes);
+app.use('/',(req , res)=> {
+    res.send("server id ruuning")
+})
 let port = process.env.PORT || 8000
 
 
