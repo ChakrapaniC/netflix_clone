@@ -16,7 +16,7 @@ const Authorization = (Component) => {
     const fetchData = useCallback(async () => {
 
       try {
-        const response = await fetch(`https://netflix-clone-five-flax.vercel.app/api/v1/login`, {
+        const response = await fetch(`https://netflix-watch-web.vercel.app/api/v1/login`, {
           method: 'GET',
           headers: {
             Authorization: token, // Use the token directly as per your backend's expectation

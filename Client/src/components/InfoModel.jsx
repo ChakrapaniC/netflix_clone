@@ -12,7 +12,7 @@ const InfoModel = ({visible , onClose}) => {
   console.log(visible);
   console.log(movieId);
   const { data = {} } = useSWR(
-    movieId ? `https://netflix-clone-five-flax.vercel.app/api/v1/singleMovie/${movieId}` : null,
+    movieId ? `https://netflix-watch-web.vercel.app/api/v1/singleMovie/${movieId}` : null,
     fetcher,
     {
       revalidateIfStale: false,

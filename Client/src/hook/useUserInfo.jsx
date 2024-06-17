@@ -22,7 +22,7 @@ const useUserInfo = () => {
   }, []);
 
   const { data, mutate, error } = useSWR(
-    token ? `https://netflix-clone-five-flax.vercel.app/api/v1/userProfile` : null,
+    token ? `https://netflix-watch-web.vercel.app/api/v1/userProfile` : null,
     fetcher,
     {
       revalidateIfStale: false,
