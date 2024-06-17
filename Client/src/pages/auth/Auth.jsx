@@ -64,7 +64,7 @@ const Auth = () => {
   
       setErrors(validationErrors);
       if (Object.keys(validationErrors).length === 0) {
-        const response = await axios.post(`https://netflix-clone-j8ji.vercel.app/api/v1/register`, dataToSend);
+        const response = await axios.post(`https://netflix-clone-five-flax.vercel.app/api/v1/register`, dataToSend);
         if (response) {
           console.log(response.data);
           setVariant("login");
@@ -96,7 +96,7 @@ const Auth = () => {
       setErrors(validationErrors);
       if (Object.keys(validationErrors).length === 0) {
         const response = await axios.post(
-        `https://netflix-clone-j8ji.vercel.app/api/v1/login`,
+        `https://netflix-clone-five-flax.vercel.app/api/v1/login`,
           dataToSend
         );
         if (response) {
@@ -181,10 +181,10 @@ const Auth = () => {
               )}
 
               <div className="flex flex-row gap-4 mt-8 items-center justify-center">
-                <div onClick={()=> {window.location.href = `https://netflix-clone-j8ji.vercel.app/api/v1/auth/google`}} className="w-10 h-10 bg-white rounded-full hover:opacity-80 transition cursor-pointer flex items-center justify-center">
+                <div onClick={()=> {window.location.href = `https://netflix-clone-five-flax.vercel.app/api/v1/auth/google`}} className="w-10 h-10 bg-white rounded-full hover:opacity-80 transition cursor-pointer flex items-center justify-center">
                   <FcGoogle size={30}/>
                 </div>
-                <div onClick={()=> {window.location.href = `https://netflix-clone-j8ji.vercel.app/api/v1/auth/github`}} className="w-10 h-10 bg-white rounded-full hover:opacity-80 transition cursor-pointer flex items-center justify-center">
+                <div onClick={()=> {window.location.href = `https://netflix-clone-five-flax.vercel.app/api/v1/auth/github`}} className="w-10 h-10 bg-white rounded-full hover:opacity-80 transition cursor-pointer flex items-center justify-center">
                   <FaGithub size={30}/>
                 </div>
               </div>

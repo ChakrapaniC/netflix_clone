@@ -9,7 +9,7 @@ const fetcher = (...args) => fetch(...args).then((response) => response.json());
 const Billboard = () => {
   
   const { data } = useSWR(
-    `https://netflix-clone-j8ji.vercel.app/api/v1/randomMovies`,
+    `https://netflix-clone-five-flax.vercel.app/api/v1/randomMovies`,
     fetcher,
     {
       revalidateIfStale: false,
