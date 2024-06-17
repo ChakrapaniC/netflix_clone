@@ -18,6 +18,11 @@ const SECRET_KEY = process.env.SECRET_KEY;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
+app.use(cors({
+    origin: 'https://netflix-clone-xwoe.vercel.app',
+    methods: 'GET,POST,PUT,DELETE,OPTIONS',
+    allowedHeaders: 'Content-Type,Authorization'
+  }));
 app.use(express.json()); 
 const store = new MongoDBStore({
     uri: DB_URI,
@@ -65,6 +70,7 @@ passport.deserializeUser( async (_id , done)=> {
 
 passport.use(passportAuth());
 
+app.options('/api/v1/login', cors());
 app.use('/api/v1', routes);
 app.use('/',(req , res)=> {
     res.send("server id ruuning")
