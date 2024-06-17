@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cors());
 app.use(cors({
-    origin: 'https://netflix-clone-xwoe.vercel.app',
+    origin: 'https://netflix-clone-pied-theta.vercel.app',
     methods: 'GET,POST,PUT,DELETE,OPTIONS',
     allowedHeaders: 'Content-Type,Authorization'
   }));
