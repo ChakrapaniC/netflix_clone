@@ -9,7 +9,7 @@ const fetcher = (...args) => fetch(...args).then((response) => response.json());
 const Billboard = () => {
   
   const { data } = useSWR(
-    `https://netflix-watch-web.vercel.app/api/v1/randomMovies`,
+    `http://netflix-watch-web.vercel.app/api/v1/randomMovies`,
     fetcher,
     {
       revalidateIfStale: false,
