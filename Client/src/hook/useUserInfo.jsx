@@ -30,6 +30,9 @@ const useUserInfo = () => {
       revalidateOnReconnect: false
     }
   );
+  if(data){
+    console.log("data fetch by request" , data);
+  }
 
   return {
     user: data,
