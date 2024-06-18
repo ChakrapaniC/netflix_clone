@@ -16,18 +16,18 @@ router.delete('/favoriteMovies/:_id', toggleFavorite);
 
 // Google OAuth routes
 router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
-router.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: 'http://127.0.0.1:5173' }), (req, res) => {
+router.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: 'https://netflix-clone-pied-theta.vercel.app/' }), (req, res) => {
     const  token  = req.user.token; 
-    res.redirect(`http://127.0.0.1:5173?token=${token}`)
+    res.redirect(`https://netflix-clone-pied-theta.vercel.app?token=${token}`)
 
   
 });
 
 // Github OAuth routes
 router.get('/auth/github', passport.authenticate('github', { scope: ['user:email'] }));
-router.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: 'http://127.0.0.1:5173/' }), (req, res) => {
+router.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: 'https://netflix-clone-pied-theta.vercel.app/' }), (req, res) => {
     const  token  = req.user.token; 
-    res.redirect(`http://127.0.0.1:5173?token=${token}`)
+    res.redirect(`https://netflix-clone-pied-theta.vercel.app?token=${token}`)
 
   
 });

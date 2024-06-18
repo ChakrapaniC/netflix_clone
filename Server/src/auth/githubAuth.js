@@ -7,7 +7,7 @@ const { generateToken } = require('./userAuth');
 passport.use(new GitHubStrategy({
     clientID: process.env.GITHUB_CLIENT_ID,
     clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    callbackURL:  "http://localhost:5000/api/v1/auth/github/callback"
+    callbackURL:  "https://netflix-watch-web.vercel.app/api/v1/auth/github/callback"
   },
   async (accessToken, refreshToken, profile, done) => {
     try {
