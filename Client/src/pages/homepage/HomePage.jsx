@@ -13,7 +13,7 @@ const fetcher = (...args) => fetch(...args).then((response)=> response.json())
 const HomePage = () => {
   const { isOpen, closeModel } = useInfoModel();
   const {user} = useUserInfo();
-  const {data} = useSWR(`http://netflix-watch-web.vercel.app/api/v1/movies`, fetcher,{
+  const {data} = useSWR(`https://netflix-watch-web.vercel.app/api/v1/movies`, fetcher,{
   
   revalidateIfStale: false,
   revalidateOnFocus: false,
