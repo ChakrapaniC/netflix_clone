@@ -5,7 +5,9 @@ import { useNavigate  } from 'react-router';
 
 const Profile = ({user}) => {
   const navigate = useNavigate();
-
+ if(user){
+   console.log("username is", user?.username)
+ }
   const loginProfile = () => {
     let token = localStorage.getItem('jwtToken');
     if(token){
