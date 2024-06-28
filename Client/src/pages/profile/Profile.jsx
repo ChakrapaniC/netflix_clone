@@ -4,7 +4,7 @@ import { useNavigate  } from 'react-router';
 
 
 const Profile = ({user}) => {
-  const navigate = useNavigate();
+ const navigate = useNavigate();
  if(user){
    console.log("username is", user?.username)
  }
@@ -31,7 +31,7 @@ const Profile = ({user}) => {
                   alt="...loading"
                 />
               </div>
-              <h2 className='text-center text-white mt-2 text-2xl'>{user?.username}</h2>
+              <h2 className='text-center text-white mt-2 text-2xl'>{user.username}</h2>
             </div>
           </div>
         </div>
