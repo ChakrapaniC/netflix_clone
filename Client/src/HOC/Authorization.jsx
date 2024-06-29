@@ -9,7 +9,6 @@ const Authorization = (Component) => {
 
   
     let token =  localStorage.getItem("jwtToken");
-    console.log(token);
     const [data, setData] = useState(null);
 
   
