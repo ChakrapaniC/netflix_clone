@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import Authorization from '../../HOC/Authorization';
 import profileImg from '../../assets/images/default-blue.png'
 import { useNavigate  } from 'react-router';
@@ -5,8 +6,11 @@ import { useNavigate  } from 'react-router';
 
 const Profile = ({user}) => {
  const navigate = useNavigate();
- console.log("username is " , user);
 
+  useEffect(() => {
+   let token = localStorage.getItem('jwtToken');
+  }, [])
+  
   const loginProfile = () => {
     let token = localStorage.getItem('jwtToken');
     if(token){

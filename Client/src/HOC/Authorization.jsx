@@ -7,7 +7,10 @@ import { Navigate } from "react-router";
 const Authorization = (Component) => {
   const HigherComponent = () => {
 
-  
+   useEffect(() => {
+     console.log("auth component called");
+   }, [])
+   
     let token =  localStorage.getItem("jwtToken");
     const [data, setData] = useState(null);
 
@@ -27,7 +30,7 @@ const Authorization = (Component) => {
         }
 
         const result = await response.json();
-        console.log(result.username)
+        console.log("after login " , result);
         setData(result);
         localStorage.setItem('username', result.username)
 
