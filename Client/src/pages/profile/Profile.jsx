@@ -5,8 +5,7 @@ import { useNavigate  } from 'react-router';
 
 const Profile = ({user}) => {
  const navigate = useNavigate();
- const username = localStorage.getItem('username');
- console.log("username is " , username);
+ console.log("username is " , user);
 
   const loginProfile = () => {
     let token = localStorage.getItem('jwtToken');
@@ -31,7 +30,7 @@ const Profile = ({user}) => {
                   alt="...loading"
                 />
               </div>
-              <h2 className='text-center text-white mt-2 text-2xl'>{username}</h2>
+              <h2 className='text-center text-white mt-2 text-2xl'>{user}</h2>
             </div>
           </div>
         </div>

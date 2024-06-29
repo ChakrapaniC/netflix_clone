@@ -27,7 +27,7 @@ const Authorization = (Component) => {
         }
 
         const result = await response.json();
-        console.log(result)
+        console.log(result.username)
         setData(result);
         localStorage.setItem('username', result.username)
 
@@ -44,7 +44,7 @@ const Authorization = (Component) => {
     if(!token ){
         return <Navigate to='/'/>
     }
-    return <Component user={data} />
+    return <Component user={data?.username} />
   };
   return HigherComponent;
 };
