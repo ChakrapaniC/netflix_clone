@@ -2,14 +2,13 @@ import { useEffect } from 'react';
 import Authorization from '../../HOC/Authorization';
 import profileImg from '../../assets/images/default-blue.png'
 import { useNavigate  } from 'react-router';
+import useUserInfo from '../../hook/useUserInfo';
 
 
-const Profile = ({user}) => {
+const Profile = () => {
  const navigate = useNavigate();
 
-  useEffect(() => {
-   let token = localStorage.getItem('jwtToken');
-  }, [])
+  const {user} = useUserInfo();
   
   const loginProfile = () => {
     let token = localStorage.getItem('jwtToken');
@@ -34,7 +33,7 @@ const Profile = ({user}) => {
                   alt="...loading"
                 />
               </div>
-              <h2 className='text-center text-white mt-2 text-2xl'>{user}</h2>
+              <h2 className='text-center text-white mt-2 text-2xl'>{user?.username}</h2>
             </div>
           </div>
         </div>
