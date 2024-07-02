@@ -13,6 +13,7 @@ const MovieCard = ({ data }) => {
         alt="thumbnail"
       ></img>
       <div
+        
         className="
         opacity-0
         absolute
@@ -26,9 +27,13 @@ const MovieCard = ({ data }) => {
         w-full
         scale-0
         group-hover:scale-110
+        group-focus:scale-110 // Add focus state
         group-hover:-translate-y-[6vw]
+        group-focus:-translate-y-[6vw] // Add focus state
         group-hover:translate-x-[2vw]
+        group-focus:translate-x-[2vw] // Add focus state
         group-hover:opacity-100
+        group-focus:opacity-100 // Add focus state
 
       "
       >
